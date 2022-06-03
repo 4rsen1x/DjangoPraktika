@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from django.views import generic
-from .forms import CommentForm
-
+from .forms import CommentForm, PostForm
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 class PostList(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by('-created_on')
@@ -32,3 +33,18 @@ def post_detail(request, slug):
                                            'comments': comments,
                                            'new_comment': new_comment,
                                            'comment_form': comment_form})
+
+def add_post(request):
+    template_name = 'blog/add_post.html'
+    if request.method == 'POST':
+        post_form = PostForm(data=request.POST)
+        if post_form.is_valid():
+            new_post = post_form.save(commit = False)
+            new_post.author = request.user
+            new_post.save()
+            respone = redirect('/')
+            return respone
+    else:
+        post_form = PostForm()
+
+    return render(request, template_name, {'post_form': post_form})
