@@ -1,50 +1,37 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-<style>
-    body {
-        font-family: "Roboto", sans-serif;
-        font-size: 18px;
-        background-color: #fdfdfd;
-    }
 
-    .head_text {
-        color: white;
-    }
-
-    .card {
-        box-shadow: 0 16px 48px #E3E7EB;
-    }
-</style>
-
-<header class="masthead">
-    <div class="overlay"></div>
+<main class="my-5">
     <div class="container">
-        <div class="row">
-            <div class=" col-md-8 col-md-10 mx-auto">
-                <div class="site-heading">
-                    <h3 class=" site-heading my-4 mt-3 text-white"> Это блог </h3>
-                </div>
-            </div>
-            <a href="{% url 'add_post_form' %}" class="btn btn-primary">Создать Пост</a>
-        </div>
-    </div>
-</header>
+      <!--Section: Content-->
+      <br><br>
+      <section class="text-center">
+        <h4 class="mb-5"><strong>Новые посты</strong></h4>
 
-<div class="container">
-    <div class="row">
-        <!-- Blog Entries Column -->
-        <div class="col-md-8 mt-3 left">
+        <div class="row">
             {% for post in post_list %}
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h2 class="card-title">{{ post.title }}</h2>
-                    <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p>
-                    <p class="card-text">{{post.content|slice:":200" }}</p>
-                    <a href="{% url 'post_detail' post.slug  %}" class="btn btn-primary">Узнать больше &rarr;</a>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card">
+                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                            <a href="#!">
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{post.title}}</h5>
+                            <p class="card-text">
+                                {{post.content|slice:":200" }}
+                            </p>
+                            <p class="card-text">
+                            {{ post.author }} | {{ post.created_on}}
+                            </p>
+                            <a href="{% url 'post_detail' post.slug  %}" class="btn btn-primary">Читать</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
             {% endfor %}
         </div>
+      </section>
     </div>
-</div>
+  </main>
 {%endblock%}

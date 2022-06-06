@@ -2,6 +2,7 @@
 {% block content %}
 
 {% if user.is_authenticated %}
+<br><br><br>
 <form method="post" style="margin-top: 1.3em;">
     {{ post_form.as_p }}
     {% csrf_token %}

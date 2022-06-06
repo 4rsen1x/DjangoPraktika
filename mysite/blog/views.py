@@ -9,6 +9,9 @@ class PostList(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by('-created_on')
     template_name = 'blog/index.html'
 
+def redirect_from_blog(request):
+    response = redirect('/')
+    return response
 
 def post_detail(request, slug):
     template_name = 'blog/post_detail.html'

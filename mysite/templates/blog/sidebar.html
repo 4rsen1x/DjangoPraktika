@@ -1,22 +1,18 @@
 {% block sidebar %}
 
-<style>
-        .card{
-            box-shadow: 0 16px 48px #E3E7EB;
-        }
+<section class="sticky-top" style="top: 80px;">
+        <!--Section: Ad-->
+        <section class="text-center border-bottom pb-4 mb-4">
+          <div class="bg-image hover-overlay ripple mb-4">
+          </div>
+          <h5>Blog by Arsen Makaov</h5>
 
-</style>
-
-<!-- Sidebar Widgets Column -->
-<div class="col-md-4 float-right ">
-<div class="card my-4">
-        <h5 class="card-header">О мне</h5>
-    <div class="card-body">
-        <p class="card-text"> Этот блог создан Арсеном Макаовым</p>
-        <a href="https://github.com/4rsen1x/DjangoPraktika"
-           class="btn btn-danger">Узнать больше</a>
-    </div>
-</div>
-</div>
+          <p>
+            Блог создан в рамках школьной практики
+          </p>
+          <a role="button" class="btn btn-primary" href="https://github.com/4rsen1x/DjangoPraktika"
+            target="_blank">Об Авторе<i class="fas fa-download ms-2"></i></a>
+</section>
 
 {% endblock sidebar %}
+

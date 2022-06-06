@@ -1,49 +1,121 @@
 {% extends 'blog/base.html' %} {% block content %}
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-8 card mb-4  mt-3 left  top">
-      <div class="card-body">
-        <h1>{% block title %} {{ post.title }} {% endblock title %}</h1>
-        <p class=" text-muted">{{ post.author }} | {{ post.created_on }}</p>
-        <p class="card-text ">{{ post.content | safe }}</p>
-      </div>
-    </div>
+  <!--Main Navigation-->
+<header>
+    <!-- Intro settings -->
+    <style>
+      #intro {
+        /* Margin to fix overlapping fixed navbar */
+        margin-top: 58px;
+      }
 
-    <div class="col-md-8 card mb-4  mt-3 ">
-      <div class="card-body">
-        <!-- comments -->
-        <h2>{{ comments.count }} comments</h2>
+      @media (max-width: 991px) {
+        #intro {
+          /* Margin to fix overlapping fixed navbar */
+          margin-top: 45px;
+        }
+      }
+    </style>
+    <!-- Jumbotron -->
+    <div id="intro" class="p-5 text-center bg-dark">
+      <h1 class="mb-0 h4">{{post.title}}</h1>
+    </div>
+    <!-- Jumbotron -->
+  </header>
+  <!--Main Navigation-->
 
-        {% for comment in comments %}
-        <div class="comments" style="padding: 10px;">
-          <p class="font-weight-bold">
-            {{ comment.name }}
-            <span class=" text-muted font-weight-normal">
-              {{ comment.created_on }}
-            </span>
-          </p>
-          {{ comment.body | linebreaks }}
+  <!--Main layout-->
+  <main class="mt-4 mb-5">
+    <div class="container">
+      <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <div class="col-md-8 mb-4">
+          <!--Section: Post data-mdb-->
+          <section class="border-bottom mb-4 bg-dark">
+            <div class="row align-items-center mb-4">
+              <div class="col-lg-6 text-center text-lg-start mb-3 m-lg-0">
+                <p> Опубликовано {{post.created_on}} автор: {{post.author}}</p>
+              </div>
+            </div>
+          </section>
+          <!--Section: Post data-mdb-->
+
+          <!--Section: Text-->
+          <section>
+            <p>
+              {{post.content}}
+            </p>
+          </section>
+          <!--Section: Text-->
+          <br><br>
+          <!--Section: Author-->
+          <section class="border-bottom mb-4 pb-4">
+              <div class="row">
+                <div class="col-3">
+                  <img src="https://avatars.githubusercontent.com/u/92880600?v=4"
+                    class="img-fluid shadow-1-strong rounded-5" alt="" />
+                </div>
+  
+                <div class="col-9">
+                  <p class="mb-2"><strong>{{post.author}}</strong></p>
+                  <a href="" class="text-dark"><i class="fab fa-facebook-f me-1"></i></a>
+                  <a href="" class="text-dark"><i class="fab fa-twitter me-1"></i></a>
+                  <a href="" class="text-dark"><i class="fab fa-linkedin me-1"></i></a>
+                  <p>
+                    Я рад делится новыми находками в интернете в своем блоге. Поделитесь им с друзьями!
+                  </p>
+                </div>
+              </div>
+            </section>
+          <!--Section: Author-->
+
+          <div class="col-md-8 card mb-4  mt-3 ">
+              <div class="card-body">
+                  <!-- comments -->
+                  {% with comments.count as total_comments %}
+                      <h2>{{ total_comments }} комментериев</h2>
+
+                      <p>
+                  {% endwith %} {% for comment in comments %}
+                      </p>
+
+                      <div class="comments" style="padding: 10px;">
+                          <p class="font-weight-bold">
+                              {{ comment.name }}
+                              <span class=" text-muted font-weight-normal">
+                                  {{ comment.created_on }}
+                              </span>
+                          </p>
+                          {{ comment.body | linebreaks }}
+                      </div>
+
+                  {% endfor %}
+              </div>
+          </div>
+          <div class="col-md-8 card mb-4  mt-3 ">
+              <div class="card-body">
+                  {% if new_comment %}
+                      <div class="alert alert-success" role="alert">
+                          Ваш комментарий на модерации!
+                      </div>
+                  {% else %}
+                      <h3>Оставить комментарий</h3>
+                      <form method="post" style="margin-top: 1.3em;">
+                          {{ comment_form.as_p }}
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-primary  btn-lg">Поделиться</button>
+                      </form>
+                  {% endif %}
+              </div>
+          </div>
+          <!--Section: Reply-->
         </div>
-        {% endfor %}
+        <!--Grid column-->
       </div>
+      <!--Grid row-->
     </div>
-    <div class="col-md-8 card mb-4  mt-3 ">
-      <div class="card-body">
-        {% if new_comment %}
-        <div class="alert alert-success" role="alert">
-          Your comment is awaiting moderation
-        </div>
-        {% else %}
-        <h3>Leave a comment</h3>
-        <form method="post" style="margin-top: 1.3em;">
-          {{ comment_form.as_p }}
-          {% csrf_token %}
-          <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
-        </form>
-        {% endif %}
-      </div>
-    </div>
-  </div>
-</div>
-{% endblock content %}
+  </main>
+  {% endblock content %}
+  <!--Main layout-->
+  
